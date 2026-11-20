@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manchester City F.C. | ข้อมูลสโมสร ประวัติ ผลงาน และรายชื่อนักเตะ</title>
+    
+    <!-- โหลดฟอนต์ Prompt และ Inter จาก Google Fonts เพื่อความสวยงามและอ่านง่ายทั้งภาษาไทยและอังกฤษ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- โหลด Tailwind CSS สำหรับจัด Layout ที่รองรับทุกหน้าจอ (Responsive) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- โหลดไอคอน Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ==========================================================================
+           1. การตั้งค่าโทนสีหลักประจำสโมสร MANCHESTER CITY (OFFICIAL CLUB PALETTE)
+           สามารถแก้ไขรหัสสีได้ที่ :root ด้านล่างนี้ สีทั้งเว็บไซต์จะเปลี่ยนตามอัตโนมัติ
+           ========================================================================== */
+        :root {
+            --mancity-sky: #6CABDD;       /* สีฟ้าหลัก (Manchester City Sky Blue) */
+            --mancity-sky-dark: #4B92DB;  /* สีฟ้าเข้มสำหรับ Hover / ไฮไลต์ */
+            --mancity-sky-light: #EBF5FC; /* สีฟ้าอ่อนละมุนสำหรับพื้นหลังการ์ด */
+            --mancity-navy: #1C2C5B;      /* สีน้ำเงินกรมท่า (Manchester City Navy Blue) */
+            --mancity-navy-deep: #111C3D; /* สีกรมท่าเข้มสำหรับ Footer / เงา */
+            --mancity-gold: #FFC659;      /* สีทองประจำสโมสร (City Crest Gold) */
+            --mancity-gold-dark: #D99B26; /* สีทองเข้มสำหรับตัวอักษร/ขอบ */
+            --bg-light: #F8FAFC;          /* สีพื้นหลังสว่างสะอาดตา */
+            --surface-white: #FFFFFF;     /* สีขาวการ์ดเนื้อหา */
+            --text-dark: #0F172A;         /* สีตัวอักษรหลัก */
+            --text-muted: #475569;        /* สีตัวอักษรรอง */
+        }
+
+        /* ตั้งค่าฟอนต์หลักของเว็บไซต์ */
+        body {
+            font-family: 'Prompt', 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* คลาสสีเสริมเชื่อมกับ CSS Variables ของ Manchester City */
+        .bg-city-sky { background-color: var(--mancity-sky); }
+        .bg-city-sky-dark { background-color: var(--mancity-sky-dark); }
+        .bg-city-navy { background-color: var(--mancity-navy); }
+        .bg-city-navy-deep { background-color: var(--mancity-navy-deep); }
+        .bg-city-gold { background-color: var(--mancity-gold); }
+        
+        .text-city-sky { color: var(--mancity-sky); }
+        .text-city-sky-dark { color: var(--mancity-sky-dark); }
+        .text-city-navy { color: var(--mancity-navy); }
+        .text-city-gold { color: var(--mancity-gold); }
+        
+        .border-city-sky { border-color: var(--mancity-sky); }
+        .border-city-navy { border-color: var(--mancity-navy); }
+        .border-city-gold { border-color: var(--mancity-gold); }
+
+        /* ไล่เฉดสีสไตล์พรีเมียมสำหรับ Hero Banner และ Header ของ Manchester City */
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(28, 44, 91, 0.94) 0%, rgba(28, 44, 91, 0.84) 45%, rgba(108, 171, 221, 0.88) 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -5px rgba(28, 44, 91, 0.14), 0 8px 10px -6px rgba(108, 171, 221, 0.22);
+        }
+
+        /* ตกแต่งแถบเลื่อน (Scrollbar) */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--mancity-navy);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--mancity-sky-dark);
+        }
+
+        /* แอนิเมชันสำหรับ Modal อ่านเพิ่มเติม */
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-animate {
+            animation: modalFadeIn 0.25s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- ==========================================================================
+         2. แถบเมนูนำทางด้านบน (STICKY NAVIGATION BAR)
+         ========================================================================== -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-4 border-city-sky shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- ตราสัญลักษณ์จำลองและชื่อสโมสร Manchester City -->
+                <a href="#home" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 rounded-full bg-city-sky flex items-center justify-center border-2 border-city-navy ring-2 ring-city-gold shadow-md group-hover:scale-105 transition-transform relative">
+                        <i class="fa-solid fa-ship text-city-navy text-xl"></i>
+                        <span class="absolute -bottom-1 px-1.5 py-0.2 bg-city-navy text-[8px] font-extrabold text-city-gold rounded-full border border-white">1894</span>
+                    </div>
+                    <div>
+                        <span class="block text-xl font-extrabold tracking-tight text-city-navy leading-none">MANCHESTER CITY</span>
+                        <span class="block text-xs font-bold text-city-sky-dark tracking-widest uppercase mt-1">Superbia In Proelio</span>
+                    </div>
+                </a>
+
+                <!-- เมนูสำหรับหน้าจอ Desktop -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                    <a href="#home" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-city-navy hover:bg-sky-100 transition-colors">หน้าแรก</a>
+                    <a href="#history" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-city-navy hover:bg-sky-100 transition-colors">ประวัติสโมสร</a>
+                    <a href="#honours" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-city-navy hover:bg-sky-100 transition-colors">ผลงานและความสำเร็จ</a>
+                    <a href="#squad" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-city-navy hover:bg-sky-100 transition-colors">รายชื่อผู้เล่น</a>
+                    <a href="#developer" class="ml-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-city-navy hover:bg-city-sky-dark border border-city-gold shadow-sm transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-user-pen text-city-gold"></i>
+                        ติดต่อผู้พัฒนา
+                    </a>
+                </nav>
+
+                <!-- ปุ่มเปิดเมนูสำหรับมือถือ (Mobile Menu Button) -->
+                <button id="mobile-menu-btn" class="md:hidden p-2.5 rounded-lg text-city-navy hover:bg-sky-50 focus:outline-none" aria-label="เปิดเมนู">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- เมนูแบบเลื่อนลงสำหรับมือถือ (Mobile Dropdown Menu) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 px-4 pt-2 pb-4 space-y-1 shadow-lg">
+            <a href="#home" class="mobile-link block px-4 py-3 rounded-lg font-medium text-slate-700 hover:bg-sky-50 hover:text-city-navy">หน้าแรก (Home)</a>
+            <a href="#history" class="mobile-link block px-4 py-3 rounded-lg font-medium text-slate-700 hover:bg-sky-50 hover:text-city-navy">ประวัติสโมสร (History)</a>
+            <a href="#honours" class="mobile-link block px-4 py-3 rounded-lg font-medium text-slate-700 hover:bg-sky-50 hover:text-city-navy">ผลงานและความสำเร็จ (Honours)</a>
+            <a href="#squad" class="mobile-link block px-4 py-3 rounded-lg font-medium text-slate-700 hover:bg-sky-50 hover:text-city-navy">รายชื่อผู้เล่น (Squad)</a>
+            <a href="#developer" class="mobile-link block px-4 py-3 rounded-lg font-semibold text-white bg-city-navy mt-2 text-center">ติดต่อผู้พัฒนา (คุณเพ็ญพิชชา)</a>
+        </div>
+    </header>
+
+    <!-- ==========================================================================
+         3. ส่วน HERO BANNER (ภาพพื้นหลังสนาม Etihad Stadium + ตราสัญลักษณ์จำลอง + ปุ่มคลิกอ่านรายละเอียด)
+         หมายเหตุ: สามารถเปลี่ยนรูปภาพพื้นหลังได้โดยแก้ลิงก์ใน attribute style="background-image: url('...')" ด้านล่าง
+         ========================================================================== -->
+    <section id="home" class="relative min-h-[85vh] flex items-center justify-center text-white overflow-hidden">
+        <!-- ภาพพื้นหลังสนามฟุตบอล Etihad Stadium (สามารถเปลี่ยน URL รูปภาพตรงนี้ได้ทันที) -->
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105" 
+             style="background-image: url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1920&q=80');">
+        </div>
+        
+        <!-- เลเยอร์ไล่สีโทนฟ้า Sky Blue - กรมท่า Navy Blue ประจำสโมสร Manchester City -->
+        <div class="absolute inset-0 hero-gradient"></div>
+
+        <!-- เนื้อหากลาง Hero Banner -->
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-16">
+            
+            <!-- ตราสัญลักษณ์จำลองสโมสร Manchester City (Crest Emblem) -->
+            <div class="mx-auto mb-6 w-28 h-28 rounded-full bg-city-sky border-4 border-white ring-4 ring-city-gold shadow-2xl flex flex-col items-center justify-center relative">
+                <span class="text-[9px] font-extrabold tracking-widest text-city-navy uppercase">MANCHESTER</span>
+                <div class="w-16 h-16 my-0.5 rounded-full bg-white border-2 border-city-navy flex flex-col items-center justify-center shadow-inner">
+                    <i class="fa-solid fa-ship text-city-gold text-xl drop-shadow-sm"></i>
+                    <div class="w-10 h-2.5 mt-1 bg-gradient-to-r from-city-sky via-city-navy to-city-sky rounded-full"></div>
+                </div>
+                <span class="text-[9px] font-extrabold tracking-widest text-city-navy uppercase">1894 • CITY</span>
+            </div>
+
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-city-gold text-sm font-medium text-amber-200 mb-5">
+                <i class="fa-solid fa-crown text-city-gold"></i>
+                <span>Pride in Battle • แชมป์พรีเมียร์ลีก 4 สมัยติดต่อกัน & แชมป์ยุโรป</span>
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight drop-shadow-md">
+                สโมสรฟุตบอล <br class="sm:hidden">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-200 to-amber-300">
+                    แมนเชสเตอร์ ซิตี้
+                </span>
+            </h1>
+            
+            <p class="text-lg sm:text-xl text-sky-50 max-w-3xl mx-auto mb-10 font-light leading-relaxed">
+                ยินดีต้อนรับสู่เว็บไซต์ข้อมูลอย่างเป็นทางการของทัพ "เรือใบสีฟ้า" (The Cityzens) เจาะลึกประวัติศาสตร์ตั้งแต่ปี 1880 ทำเนียบความสำเร็จระดับตำนาน และรายชื่อนักเตะชุดปัจจุบัน
+            </p>
+            
+            <!-- ปุ่ม Call-to-Action -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="openArticleModal('full_history')" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-city-sky hover:bg-white text-city-navy font-extrabold text-base shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2 border-2 border-white">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>คลิกอ่านประวัติฉบับเต็ม</span>
+                </button>
+                <button onclick="openArticleModal('treble')" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-city-navy/90 hover:bg-city-navy text-white border-2 border-city-gold font-bold text-base shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-trophy text-city-gold"></i>
+                    <span>เจาะลึกยุค Treble แชมป์ 2022/23</span>
+                </button>
+            </div>
+
+            <!-- แถบสถิติย่อด้านล่าง Hero -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-14 pt-8 border-t border-white/25">
+                <div class="p-3 rounded-xl bg-city-navy/50 backdrop-blur-sm border border-white/15">
+                    <div class="text-3xl font-extrabold text-city-gold">1880</div>
+                    <div class="text-xs sm:text-sm text-sky-100 mt-1">ปีที่ก่อตั้งสโมสร</div>
+                </div>
+                <div class="p-3 rounded-xl bg-city-navy/50 backdrop-blur-sm border border-white/15">
+                    <div class="text-3xl font-extrabold text-white">10 สมัย</div>
+                    <div class="text-xs sm:text-sm text-sky-100 mt-1">แชมป์ลีกสูงสุดอังกฤษ</div>
+                </div>
+                <div class="p-3 rounded-xl bg-city-navy/50 backdrop-blur-sm border border-white/15">
+                    <div class="text-3xl font-extrabold text-city-gold">2023</div>
+                    <div class="text-xs sm:text-sm text-sky-100 mt-1">แชมป์ UEFA Champions League</div>
+                </div>
+                <div class="p-3 rounded-xl bg-city-navy/50 backdrop-blur-sm border border-white/15">
+                    <div class="text-3xl font-extrabold text-white">53,400</div>
+                    <div class="text-xs sm:text-sm text-sky-100 mt-1">ความจุสนาม Etihad Stadium</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         4. ส่วนประวัติการก่อตั้งทีม (CLUB HISTORY)
+         ========================================================================== -->
+    <section id="history" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- หัวข้อ Section -->
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-city-sky-dark font-bold tracking-wider uppercase text-sm">Club Heritage & Origins</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-city-navy mt-2 mb-4">ประวัติการก่อตั้งและวิวัฒนาการสโมสร</h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-city-sky via-city-gold to-city-navy mx-auto rounded-full"></div>
+                <p class="text-slate-600 mt-4">จากทีมฟุตบอลท้องถิ่นในย่านเวสต์กอร์ตัน สู่สโมสรฟุตบอลระดับแถวหน้าของโลก</p>
+                
+                <!-- ปุ่มเปิดไทม์ไลน์ประวัติศาสตร์ฉบับเต็ม -->
+                <div class="mt-6">
+                    <button onclick="openArticleModal('full_history')" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-city-navy hover:bg-city-sky-dark text-white font-bold text-sm shadow-md transition-all">
+                        <i class="fa-solid fa-timeline text-city-gold"></i>
+                        <span>คลิกอ่านประวัติฉบับเต็ม (ไทม์ไลน์ 1880 - ปัจจุบัน)</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- กริดเนื้อหาประวัติศาสตร์ 4 ยุคสำคัญ (คลิกอ่านเพิ่มเติมได้ทุกการ์ด) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- ยุคที่ 1: 1880 -->
+                <article class="bg-sky-50/60 rounded-2xl p-6 border-t-4 border-city-sky shadow-md card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-sky-100 text-city-navy font-bold text-sm">ค.ศ. 1880</span>
+                            <i class="fa-solid fa-church text-city-sky-dark text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-city-navy mb-3">จุดเริ่มต้น St. Mark's (West Gorton)</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            ก่อตั้งขึ้นโดย แอนนา คอนเนลล์ (Anna Connell) และสมาชิกโบสถ์เซนต์มาร์ก เพื่อสร้างกิจกรรมเชิงบวกให้เยาวชนและลดปัญหาความรุนแรงในย่านเวสต์กอร์ตัน
+                        </p>
+                    </div>
+                    <button onclick="openArticleModal('history_1880')" class="w-full py-2.5 px-4 rounded-xl bg-white border border-city-sky text-city-navy font-semibold text-sm hover:bg-city-sky hover:text-white transition-colors flex items-center justify-center gap-2">
+                        <span>คลิกอ่านเพิ่มเติม</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </article>
+
+                <!-- ยุคที่ 2: 1887 - 1894 -->
+                <article class="bg-sky-50/60 rounded-2xl p-6 border-t-4 border-city-navy shadow-md card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-blue-100 text-city-navy font-bold text-sm">ค.ศ. 1894</span>
+                            <i class="fa-solid fa-signature text-city-sky-dark text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-city-navy mb-3">กำเนิดชื่อ Manchester City F.C.</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            หลังจากเปลี่ยนชื่อเป็น Ardwick A.F.C. ในปี 1887 สโมสรได้ปรับโครงสร้างใหม่และจดทะเบียนใช้ชื่อ "แมนเชสเตอร์ ซิตี้" อย่างเป็นทางการในวันที่ 16 เมษายน 1894
+                        </p>
+                    </div>
+                    <button onclick="openArticleModal('history_1894')" class="w-full py-2.5 px-4 rounded-xl bg-white border border-city-navy text-city-navy font-semibold text-sm hover:bg-city-navy hover:text-white transition-colors flex items-center justify-center gap-2">
+                        <span>คลิกอ่านเพิ่มเติม</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </article>
+
+                <!-- ยุคที่ 3: 1960s - 1970s -->
+                <article class="bg-sky-50/60 rounded-2xl p-6 border-t-4 border-city-gold shadow-md card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 font-bold text-sm">ยุค 1960s-70s</span>
+                            <i class="fa-solid fa-star text-amber-500 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-city-navy mb-3">ยุคทองคู่หู เมอร์เซอร์ & อัลลิสัน</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            ยุคที่สโมสรกวาดแชมป์ลีกสูงสุด เอฟเอ คัพ ลีก คัพ และยูโรเปียน คัพ วินเนอร์ส คัพ โดยมีตำนานอย่าง โคลิน เบลล์, ฟรานซิส ลี และ ไมค์ ซัมเมอร์บี
+                        </p>
+                    </div>
+                    <button onclick="openArticleModal('history_1968')" class="w-full py-2.5 px-4 rounded-xl bg-white border border-amber-500 text-amber-800 font-semibold text-sm hover:bg-city-gold hover:text-city-navy transition-colors flex items-center justify-center gap-2">
+                        <span>คลิกอ่านเพิ่มเติม</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </article>
+
+                <!-- ยุคที่ 4: 2008 - ปัจจุบัน -->
+                <article class="bg-sky-50/60 rounded-2xl p-6 border-t-4 border-city-sky-dark shadow-md card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-sky-100 text-city-navy font-bold text-sm">2008 - ปัจจุบัน</span>
+                            <i class="fa-solid fa-globe text-city-navy text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-city-navy mb-3">ยุคสมัยใหม่และมหาอำนาจลูกหนัง</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            การเข้ามาของกลุ่มทุน Abu Dhabi United Group และการคุมทีมของ เป๊ป กวาร์ดิโอลา พาทีมสร้างประวัติศาสตร์คว้า 3 แชมป์ใหญ่ในปี 2023 และแชมป์ลีก 4 สมัยติด
+                        </p>
+                    </div>
+                    <button onclick="openArticleModal('history_modern')" class="w-full py-2.5 px-4 rounded-xl bg-white border border-city-sky-dark text-city-navy font-semibold text-sm hover:bg-city-sky-dark hover:text-white transition-colors flex items-center justify-center gap-2">
+                        <span>คลิกอ่านเพิ่มเติม</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         5. ส่วนผลงานตั้งแต่อดีตจนถึงปัจจุบัน (HONOURS & ACHIEVEMENTS)
+         ========================================================================== -->
+    <section id="honours" class="py-20 bg-gradient-to-b from-sky-50 to-white border-y border-sky-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- หัวข้อ Section -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-city-sky-dark font-bold tracking-wider uppercase text-sm">Trophy Cabinet</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-city-navy mt-2 mb-4">ทำเนียบผลงานและความสำเร็จ</h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-city-sky via-city-gold to-city-navy mx-auto rounded-full"></div>
+                <p class="text-slate-600 mt-4">รวบรวมถ้วยรางวัลเกียรติยศตั้งแต่อดีตจนถึงยุคปัจจุบัน คลิกที่การ์ดถ้วยรางวัลเพื่อดูรายละเอียดปีที่คว้าแชมป์</p>
+            </div>
+
+            <!-- กริดถ้วยรางวัลสำคัญ 6 รายการ -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- ถ้วยที่ 1: พรีเมียร์ลีก / ดิวิชัน 1 -->
+                <div class="bg-white rounded-2xl p-7 shadow-lg border border-sky-100 relative overflow-hidden card-hover">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-sky-50 rounded-bl-full -mr-4 -mt-4"></div>
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-16 h-16 rounded-2xl bg-city-sky text-city-navy flex items-center justify-center text-3xl shadow-md">
+                            <i class="fa-solid fa-trophy text-white drop-shadow"></i>
+                        </div>
+                        <div>
+                            <span class="text-4xl font-extrabold text-city-navy">10</span>
+                            <span class="text-sm font-bold text-city-sky-dark uppercase ml-1">สมัย</span>
+                            <h3 class="text-lg font-bold text-slate-800">Premier League / ลีกสูงสุด</h3>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                        <strong>ปีที่คว้าแชมป์:</strong> 1936–37, 1967–68, 2011–12, 2013–14, 2017–18, 2018–19, 2020–21, 2021–22, 2022–23, 2023–24
+                    </p>
+                    <button onclick="openArticleModal('honour_league')" class="text-sm font-bold text-city-sky-dark hover:text-city-navy inline-flex items-center gap-1.5">
+                        <span>ดูรายละเอียดสถิติแชมป์ลีก</span>
+                        <i class="fa-solid fa-circle-info"></i>
+                    </button>
+                </div>
+
+                <!-- ถ้วยที่ 2: ยูฟ่า แชมเปียนส์ลีก -->
+                <div class="bg-white rounded-2xl p-7 shadow-lg border-2 border-city-gold relative overflow-hidden card-hover">
+                    <div class="absolute top-3 right-3 px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 text-xs font-bold">Treble 2022/23</div>
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-16 h-16 rounded-2xl bg-city-navy text-white flex items-center justify-center text-3xl shadow-md">
+                            <i class="fa-solid fa-star text-city-gold"></i>
+                        </div>
+                        <div>
+                            <span class="text-4xl font-extrabold text-city-navy">1</span>
+                            <span class="text-sm font-bold text-city-sky-dark uppercase ml-1">สมัย</span>
+                            <h3 class="text-lg font-bold text-slate-800">UEFA Champions League</h3>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                        <strong>ปีที่คว้าแชมป์:</strong> 2022–23 (ชนะ อินเตอร์ มิลาน 1-0 ที่กรุงอิสตันบูล ประเทศตุรกี พร้อมสร้างประวัติศาสตร์คว้า Treble แชมป์)
+                    </p>
+                    <button onclick="openArticleModal('treble')" class="text-sm font-bold text-city-navy hover:text-city-sky-dark inline-flex items-center gap-1.5">
+                        <span>อ่านเส้นทางแชมป์ยุโรป & Treble</span>
+                        <i class="fa-solid fa-circle-info"></i>
+                    </button>
+                </div>
+
+                <!-- ถ้วยที่ 3: เอฟเอ คัพ -->
+                <div class="bg-white rounded-2xl p-7 shadow-lg border border-sky-100 relative overflow-hidden card-hover">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-16 h-16 rounded-2xl bg-city-sky-dark text-white flex items-center justify-center text-3xl shadow-md">
+                            <i class="fa-solid fa-award text-city-gold"></i>
+                        </div>
+                        <div>
+                            <span class="text-4xl font-extrabold text-city-navy">7</span>
+                            <span class="text-sm font-bold text-city-sky-dark uppercase ml-1">สมัย</span>
+                            <h3 class="text-lg font-bold text-slate-800">FA Cup (เอฟเอ คัพ)</h3>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                        <strong>ปีที่คว้าแชมป์:</strong> 1903–04 (แชมป์เมเจอร์แรกของสโมสร), 1933–34, 1955–56, 1968–69, 2010–11, 2018–19, 2022–23
+                    </p>
+                    <button onclick="openArticleModal('honour_fa')" class="text-sm font-bold text-city-sky-dark hover:text-city-navy inline-flex items-center gap-1.5">
+                        <span>อ่านประวัติศาสตร์เอฟเอ คัพ</span>
+                        <i class="fa-solid fa-circle-info"></i>
+                    </button>
+                </div>
+
+                <!-- ถ้วยที่ 4: คาราบาว คัพ / อีเอฟแอล คัพ -->
+                <div class="bg-white rounded-2xl p-7 shadow-lg border border-sky-100 relative overflow-hidden card-hover">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-16 h-16 rounded-2xl bg-city-sky text-white flex items-center justify-center text-3xl shadow-md">
+                            <i class="fa-solid fa-medal text-city-navy"></i>
+                        </div>
+                        <div>
+                            <span class="text-4xl font-extrabold text-city-navy">8</span>
+                            <span class="text-sm font-bold text-city-sky-dark uppercase ml-1">สมัย</span>
+                            <h3 class="text-lg font-bold text-slate-800">Carabao Cup / League Cup</h3>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                        <strong>ปีที่คว้าแชมป์:</strong> 1969–70, 1975–76, 2013–14, 2015–16, 2017–18, 2018–19, 2019–20, 2020–21 (คว้าแชมป์ 4 สมัยติดต่อกัน)
+                    </p>
+                    <button onclick="openArticleModal('honour_carabao')" class="text-sm font-bold text-city-sky-dark hover:text-city-navy inline-flex items-center gap-1.5">
+                        <span>ดูรายละเอียดสถิติลีกคัพ</span>
+                        <i class="fa-solid fa-circle-info"></i>
+                    </button>
+                </div>
+
+                <!-- ถ้วยที่ 5: ฟีฟ่า คลับ เวิลด์ คัพ & ยูฟ่า ซูเปอร์ คัพ -->
+                <div class="bg-white rounded-2xl p-7 shadow-lg border border-sky-100 relative overflow-hidden card-hover">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-16 h-16 rounded-2xl bg-city-navy text-white flex items-center justify-center text-3xl shadow-md">
+                            <i class="fa-solid fa-earth-americas text-city-gold"></i>
+                        </div>
+                        <div>
+                            <span class="text-4xl font-extrabold text-city-navy">2</span>
+                            <span class="text-sm font-bold text-city-sky-dark uppercase ml-1">ถ้วยโลก/ยุโรป</span>
+                            <h3 class="text-lg font-bold text-slate-800">FIFA Club World Cup & Super Cup</h3>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                        <strong>ปีที่คว้าแชมป์:</strong> UEFA Super Cup 2023 และ FIFA Club World Cup 2023 (คว้าแชมป์สโมสรโลกสมัยแรกได้สำเร็จ)
+                    </p>
+                    <button onclick="openArticleModal('honour_cwc')" class="text-sm font-bold text-city-sky-dark hover:text-city-navy inline-flex items-center gap-1.5">
+                        <span>อ่านรายละเอียดแชมป์สโมสรโลก</span>
+                        <i class="fa-solid fa-circle-info"></i>
+                    </button>
+                </div>
+
+                <!-- ถ้วยที่ 6: คอมมิวนิตี ชิลด์ & คัพ วินเนอร์ส คัพ -->
+                <div class="bg-white rounded-2xl p-7 shadow-lg border border-sky-100 relative overflow-hidden card-hover">
+                    <div class="flex items-center gap-4 mb-5">
+                        <div class="w-16 h-16 rounded-2xl bg-city-sky-dark text-white flex items-center justify-center text-3xl shadow-md">
+                            <i class="fa-solid fa-shield text-city-gold"></i>
+                        </div>
+                        <div>
+                            <span class="text-4xl font-extrabold text-city-navy">8</span>
+                            <span class="text-sm font-bold text-city-sky-dark uppercase ml-1">สมัย</span>
+                            <h3 class="text-lg font-bold text-slate-800">Community Shield & อื่นๆ</h3>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                        <strong>รายละเอียด:</strong> FA Community Shield 7 สมัย (ล่าสุดปี 2024) และ European Cup Winners' Cup 1 สมัย (ฤดูกาล 1969–70)
+                    </p>
+                    <span class="text-xs font-semibold text-slate-400">เกียรติประวัติอันยาวนานของสโมสร</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         6. ส่วนรายชื่อผู้เล่นชุดปัจจุบัน (FIRST TEAM SQUAD)
+         คำแนะนำการแก้ไข/เพิ่มรายชื่อผู้เล่น:
+         1. คุณสามารถคัดลอกบล็อก <div class="player-card ..."> ด้านล่างไปวางต่อท้ายเพื่อเพิ่มนักเตะใหม่ได้ทันที
+         2. เปลี่ยนรูปภาพนักเตะได้ที่แท็ก <img src="ลิงก์รูปภาพใหม่" ...>
+         ========================================================================== -->
+    <section id="squad" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- หัวข้อ Section -->
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="text-city-sky-dark font-bold tracking-wider uppercase text-sm">First Team Squad</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-city-navy mt-2 mb-4">ทำเนียบรายชื่อผู้เล่นทีมชุดใหญ่</h2>
+                <div class="w-24 h-1.5 bg-gradient-to-r from-city-sky via-city-gold to-city-navy mx-auto rounded-full"></div>
+                <p class="text-slate-600 mt-4">เลือกกรองตามตำแหน่งการเล่น หรือคลิกที่การ์ดนักเตะเพื่อดูข้อมูลประวัติและสถิติส่วนตัว</p>
+            </div>
+
+            <!-- ปุ่มตัวกรองตำแหน่งนักเตะ (Filter Buttons) -->
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12" id="squad-filters">
+                <button onclick="filterPlayers('all')" class="filter-btn active px-5 py-2.5 rounded-full text-sm font-bold bg-city-navy text-white shadow-md transition-all">
+                    ทั้งหมด (All)
+                </button>
+                <button onclick="filterPlayers('GK')" class="filter-btn px-5 py-2.5 rounded-full text-sm font-bold bg-sky-50 text-city-navy hover:bg-city-sky hover:text-white transition-all">
+                    ผู้รักษาประตู (Goalkeepers)
+                </button>
+                <button onclick="filterPlayers('DEF')" class="filter-btn px-5 py-2.5 rounded-full text-sm font-bold bg-sky-50 text-city-navy hover:bg-city-sky hover:text-white transition-all">
+                    กองหลัง (Defenders)
+                </button>
+                <button onclick="filterPlayers('MID')" class="filter-btn px-5 py-2.5 rounded-full text-sm font-bold bg-sky-50 text-city-navy hover:bg-city-sky hover:text-white transition-all">
+                    กองกลาง (Midfielders)
+                </button>
+                <button onclick="filterPlayers('FWD')" class="filter-btn px-5 py-2.5 rounded-full text-sm font-bold bg-sky-50 text-city-navy hover:bg-city-sky hover:text-white transition-all">
+                    กองหน้า (Forwards)
+                </button>
+            </div>
+
+            <!-- กริดแสดงการ์ดรายชื่อนักเตะ -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="players-grid">
+
+                <!-- ================= [ผู้รักษาประตู - GK] ================= -->
+                <!-- นักเตะคนที่ 1: เอแดร์ซอน -->
+                <div class="player-card bg-white rounded-2xl overflow-hidden shadow-md border border-sky-100 card-hover" data-position="GK">
+                    <div class="relative h-56 bg-gradient-to-tr from-city-navy to-city-sky overflow-hidden">
+                        <!-- เปลี่ยนรูปภาพนักเตะได้ที่ src ด้านล่าง -->
+                        <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=600&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/1C2C5B/6CABDD?text=Ederson+%2331'"
+                             alt="Ederson Moraes" class="w-full h-full object-cover opacity-85 mix-blend-luminosity hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 px-3 py-1 rounded-lg bg-city-navy text-white text-xs font-bold border border-city-gold">ผู้รักษาประตู</span>
+                        <span class="absolute bottom-2 right-4 text-5xl font-black text-white/95 drop-shadow">31</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs font-bold text-city-sky-dark uppercase">บราซิล (Brazil)</div>
+                        <h3 class="text-lg font-extrabold text-city-navy mt-0.5">เอแดร์ซอน โมราเอส</h3>
+                        <p class="text-xs text-slate-500 mb-4">Ederson Santana de Moraes</p>
+                        <button onclick="openPlayerModal('Ederson Moraes', '31', 'ผู้รักษาประตู (Goalkeeper)', 'บราซิล', 'ย้ายมาร่วมทีมในปี 2017 เป็นผู้รักษาประตูที่มีทักษะการใช้เท้าเปิดบอลระดับโลก คว้ารางวัลถุงมือทองคำพรีเมียร์ลีก 3 สมัยติดต่อกัน และแชมป์พรีเมียร์ลีก 6 สมัย')" 
+                                class="w-full py-2 rounded-lg bg-sky-50 hover:bg-city-navy text-city-navy hover:text-white font-semibold text-xs transition-colors">
+                            ดูข้อมูลสถิติส่วนตัว
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ================= [กองหลัง - DEF] ================= -->
+                <!-- นักเตะคนที่ 2: รูเบน ดิอาส -->
+                <div class="player-card bg-white rounded-2xl overflow-hidden shadow-md border border-sky-100 card-hover" data-position="DEF">
+                    <div class="relative h-56 bg-gradient-to-tr from-city-navy to-city-sky-dark overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=600&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/1C2C5B/FFFFFF?text=Ruben+Dias+%233'"
+                             alt="Ruben Dias" class="w-full h-full object-cover opacity-85 mix-blend-luminosity hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 px-3 py-1 rounded-lg bg-city-sky text-city-navy text-xs font-extrabold border border-white">กองหลัง</span>
+                        <span class="absolute bottom-2 right-4 text-5xl font-black text-white/95 drop-shadow">3</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs font-bold text-city-sky-dark uppercase">โปรตุเกส (Portugal)</div>
+                        <h3 class="text-lg font-extrabold text-city-navy mt-0.5">รูเบน ดิอาส</h3>
+                        <p class="text-xs text-slate-500 mb-4">Rúben Dias</p>
+                        <button onclick="openPlayerModal('Rúben Dias', '3', 'กองหลังตัวกลาง (Center-Back)', 'โปรตุเกส', 'หัวใจสำคัญในแนวรับที่แข็งแกร่ง ดุดัน และมีความเป็นผู้นำสูง คว้ารางวัลนักเตะยอดเยี่ยมแห่งปีของพรีเมียร์ลีกตั้งแต่ฤดูกาลแรกที่ย้ายมาร่วมทัพเรือใบสีฟ้า')" 
+                                class="w-full py-2 rounded-lg bg-sky-50 hover:bg-city-navy text-city-navy hover:text-white font-semibold text-xs transition-colors">
+                            ดูข้อมูลสถิติส่วนตัว
+                        </button>
+                    </div>
+                </div>
+
+                <!-- นักเตะคนที่ 3: ยอสโก กวาร์ดิโอล -->
+                <div class="player-card bg-white rounded-2xl overflow-hidden shadow-md border border-sky-100 card-hover" data-position="DEF">
+                    <div class="relative h-56 bg-gradient-to-tr from-city-navy to-city-sky-dark overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=600&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/1C2C5B/FFFFFF?text=Gvardiol+%2324'"
+                             alt="Josko Gvardiol" class="w-full h-full object-cover opacity-85 mix-blend-luminosity hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 px-3 py-1 rounded-lg bg-city-sky text-city-navy text-xs font-extrabold border border-white">กองหลัง</span>
+                        <span class="absolute bottom-2 right-4 text-5xl font-black text-white/95 drop-shadow">24</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs font-bold text-city-sky-dark uppercase">โครเอเชีย (Croatia)</div>
+                        <h3 class="text-lg font-extrabold text-city-navy mt-0.5">ยอสโก กวาร์ดิโอล</h3>
+                        <p class="text-xs text-slate-500 mb-4">Joško Gvardiol</p>
+                        <button onclick="openPlayerModal('Joško Gvardiol', '24', 'กองหลัง (Defender)', 'โครเอเชีย', 'กองหลังสารพัดประโยชน์ที่เล่นได้ทั้งเซ็นเตอร์แบ็กและแบ็กซ้าย มีจุดเด่นเรื่องการเติมเกมรุกและการทำประตูสำคัญให้ทีมอย่างต่อเนื่อง')" 
+                                class="w-full py-2 rounded-lg bg-sky-50 hover:bg-city-navy text-city-navy hover:text-white font-semibold text-xs transition-colors">
+                            ดูข้อมูลสถิติส่วนตัว
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ================= [กองกลาง - MID] ================= -->
+                <!-- นักเตะคนที่ 4: เควิน เดอ บรอยน์ -->
+                <div class="player-card bg-white rounded-2xl overflow-hidden shadow-md border border-sky-100 card-hover" data-position="MID">
+                    <div class="relative h-56 bg-gradient-to-tr from-city-navy to-sky-600 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/6CABDD/1C2C5B?text=De+Bruyne+%2317'"
+                             alt="Kevin De Bruyne" class="w-full h-full object-cover opacity-85 mix-blend-luminosity hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 px-3 py-1 rounded-lg bg-city-gold text-city-navy text-xs font-extrabold">กองกลาง</span>
+                        <span class="absolute bottom-2 right-4 text-5xl font-black text-white/95 drop-shadow">17</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs font-bold text-city-sky-dark uppercase">เบลเยียม (Belgium)</div>
+                        <h3 class="text-lg font-extrabold text-city-navy mt-0.5">เควิน เดอ บรอยน์</h3>
+                        <p class="text-xs text-slate-500 mb-4">Kevin De Bruyne</p>
+                        <button onclick="openPlayerModal('Kevin De Bruyne', '17', 'กองกลางตัวรุก (Attacking Midfielder)', 'เบลเยียม', 'จอมทัพกัปตันทีมระดับตำนานของสโมสร เจ้าของสถิติแอสซิสต์สูงสุดอันดับต้นๆ ในประวัติศาสตร์พรีเมียร์ลีก และผู้สร้างสรรค์เกมระดับโลก')" 
+                                class="w-full py-2 rounded-lg bg-sky-50 hover:bg-city-navy text-city-navy hover:text-white font-semibold text-xs transition-colors">
+                            ดูข้อมูลสถิติส่วนตัว
+                        </button>
+                    </div>
+                </div>
+
+                <!-- นักเตะคนที่ 5: โรดรี -->
+                <div class="player-card bg-white rounded-2xl overflow-hidden shadow-md border border-sky-100 card-hover" data-position="MID">
+                    <div class="relative h-56 bg-gradient-to-tr from-city-navy to-sky-600 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/6CABDD/1C2C5B?text=Rodri+%2316'"
+                             alt="Rodri" class="w-full h-full object-cover opacity-85 mix-blend-luminosity hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 px-3 py-1 rounded-lg bg-city-gold text-city-navy text-xs font-extrabold">กองกลาง</span>
+                        <span class="absolute bottom-2 right-4 text-5xl font-black text-white/95 drop-shadow">16</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs font-bold text-city-sky-dark uppercase">สเปน (Spain)</div>
+                        <h3 class="text-lg font-extrabold text-city-navy mt-0.5">โรดรี (โรดริโก)</h3>
+                        <p class="text-xs text-slate-500 mb-4">Rodrigo Hernández Cascante</p>
+                        <button onclick="openPlayerModal('Rodri', '16', 'กองกลางตัวรับ (Defensive Midfielder)', 'สเปน', 'เจ้าของรางวัลบัลลงดอร์ (Ballon d\'Or) และผู้ยิงประตูชัยในนัดชิงชนะเลิศ ยูฟ่า แชมเปียนส์ลีก 2023 เป็นแกนหลักคุมจังหวะเกมของแมนเชสเตอร์ ซิตี้')" 
+                                class="w-full py-2 rounded-lg bg-sky-50 hover:bg-city-navy text-city-navy hover:text-white font-semibold text-xs transition-colors">
+                            ดูข้อมูลสถิติส่วนตัว
+                        </button>
+                    </div>
+                </div>
+
+                <!-- นักเตะคนที่ 6: ฟิล โฟเดน -->
+                <div class="player-card bg-white rounded-2xl overflow-hidden shadow-md border border-sky-100 card-hover" data-position="MID">
+                    <div class="relative h-56 bg-gradient-to-tr from-city-navy to-sky-600 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?auto=format&fit=crop&w=600&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/6CABDD/1C2C5B?text=Phil+Foden+%2347'"
+                             alt="Phil Foden" class="w-full h-full object-cover opacity-85 mix-blend-luminosity hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 px-3 py-1 rounded-lg bg-city-gold text-city-navy text-xs font-extrabold">กองกลาง</span>
+                        <span class="absolute bottom-2 right-4 text-5xl font-black text-white/95 drop-shadow">47</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs font-bold text-city-sky-dark uppercase">อังกฤษ (England)</div>
+                        <h3 class="text-lg font-extrabold text-city-navy mt-0.5">ฟิล โฟเดน</h3>
+                        <p class="text-xs text-slate-500 mb-4">Phil Foden</p>
+                        <button onclick="openPlayerModal('Phil Foden', '47', 'กองกลางตัวรุก / ปีก', 'อังกฤษ', 'ลูกหม้อผลผลิตจากอะคาเดมีของสโมสรที่ก้าวขึ้นมาเป็นกำลังหลัก คว้ารางวัลนักเตะยอดเยี่ยมแห่งปีของพรีเมียร์ลีก ฤดูกาล 2023-24')" 
+                                class="w-full py-2 rounded-lg bg-sky-50 hover:bg-city-navy text-city-navy hover:text-white font-semibold text-xs transition-colors">
+                            ดูข้อมูลสถิติส่วนตัว
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ================= [กองหน้า - FWD] ================= -->
+                <!-- นักเตะคนที่ 7: เออร์ลิง ฮาลันด์ -->
+                <div class="player-card bg-white rounded-2xl overflow-hidden shadow-md border-2 border-city-sky card-hover" data-position="FWD">
+                    <div class="relative h-56 bg-gradient-to-tr from-city-sky to-city-navy overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1518604666860-9ed391f76460?auto=format&fit=crop&w=600&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/6CABDD/FFFFFF?text=Haaland+%239'"
+                             alt="Erling Haaland" class="w-full h-full object-cover opacity-85 mix-blend-luminosity hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 px-3 py-1 rounded-lg bg-white text-city-navy text-xs font-extrabold">กองหน้า</span>
+                        <span class="absolute bottom-2 right-4 text-5xl font-black text-white/95 drop-shadow">9</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs font-bold text-city-sky-dark uppercase">นอร์เวย์ (Norway)</div>
+                        <h3 class="text-lg font-extrabold text-city-navy mt-0.5">เออร์ลิง ฮาลันด์</h3>
+                        <p class="text-xs text-slate-500 mb-4">Erling Braut Haaland</p>
+                        <button onclick="openPlayerModal('Erling Haaland', '9', 'กองหน้าตัวเป้า (Striker)', 'นอร์เวย์', 'เครื่องจักรสังหารประตูเจ้าของสถิติยิงประตูสูงสุดใน 1 ฤดูกาลของพรีเมียร์ลีก (36 ประตู) และคว้ารางวัลดาวซัลโว 2 สมัยติดต่อกัน')" 
+                                class="w-full py-2 rounded-lg bg-city-sky hover:bg-city-navy text-city-navy hover:text-white font-bold text-xs transition-colors">
+                            ดูข้อมูลสถิติส่วนตัว
+                        </button>
+                    </div>
+                </div>
+
+                <!-- นักเตะคนที่ 8: เฌเรมี โดกู -->
+                <div class="player-card bg-white rounded-2xl overflow-hidden shadow-md border border-sky-100 card-hover" data-position="FWD">
+                    <div class="relative h-56 bg-gradient-to-tr from-city-sky to-city-navy overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?auto=format&fit=crop&w=600&q=80" 
+                             onerror="this.src='https://placehold.co/600x400/6CABDD/FFFFFF?text=Jeremy+Doku+%2311'"
+                             alt="Jeremy Doku" class="w-full h-full object-cover opacity-85 mix-blend-luminosity hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 px-3 py-1 rounded-lg bg-white text-city-navy text-xs font-extrabold">กองหน้า</span>
+                        <span class="absolute bottom-2 right-4 text-5xl font-black text-white/95 drop-shadow">11</span>
+                    </div>
+                    <div class="p-5">
+                        <div class="text-xs font-bold text-city-sky-dark uppercase">เบลเยียม (Belgium)</div>
+                        <h3 class="text-lg font-extrabold text-city-navy mt-0.5">เฌเรมี โดกู</h3>
+                        <p class="text-xs text-slate-500 mb-4">Jérémy Doku</p>
+                        <button onclick="openPlayerModal('Jérémy Doku', '11', 'ปีก / กองหน้า (Winger)', 'เบลเยียม', 'ปีกความเร็วสูงที่มีทักษะการเลี้ยงบอลผ่านคู่ต่อสู้ติดอันดับต้นๆ ของยุโรป สร้างความปั่นป่วนให้แนวรับคู่แข่งได้อย่างยอดเยี่ยม')" 
+                                class="w-full py-2 rounded-lg bg-sky-50 hover:bg-city-navy text-city-navy hover:text-white font-semibold text-xs transition-colors">
+                            ดูข้อมูลสถิติส่วนตัว
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ========================================================================
+                     [พื้นที่สำหรับเพิ่มรายชื่อผู้เล่นเพิ่มเติม]
+                     คัดลอกการ์ดด้านบนมาวางตรงนี้ แล้วเปลี่ยนชื่อ หมายเลข และลิงก์รูปภาพได้เลยครับ
+                     ======================================================================== -->
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         7. ส่วนติดต่อผู้พัฒนาเว็บไซต์ (DEVELOPER CONTACT SECTION & FOOTER)
+         ข้อมูลผู้พัฒนา: คุณเพ็ญพิชชา ตินศรี (Penpitcha Tinsri) | Line ID: tonaor2014ty
+         หมายเหตุ: สามารถเปลี่ยนรูปภาพโปรไฟล์ผู้พัฒนาได้ที่แท็ก <img src="..." id="dev-avatar"> ด้านล่าง
+         ========================================================================== -->
+    <section id="developer" class="py-20 bg-city-navy text-white relative overflow-hidden border-t-4 border-city-sky">
+        <!-- ลวดลายตกแต่งพื้นหลัง -->
+        <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#6CABDD_1px,transparent_1px)] [background-size:20px_20px]"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-city-sky font-bold tracking-widest uppercase text-xs">Web Designer & Developer</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">ติดต่อผู้พัฒนาเว็บไซต์</h2>
+                <p class="text-sky-100 mt-2 text-sm">หากต้องการสอบถามข้อมูลเพิ่มเติม ปรับปรุงเว็บไซต์ หรือติดต่อประสานงาน สามารถติดต่อได้ตามช่องทางด้านล่าง</p>
+            </div>
+
+            <!-- การ์ดโปรไฟล์ผู้พัฒนา -->
+            <div class="bg-white/10 backdrop-blur-md border-2 border-city-sky/80 rounded-3xl p-8 sm:p-10 shadow-2xl flex flex-col md:flex-row items-center gap-8">
+                
+                <!-- รูปภาพโปรไฟล์ผู้พัฒนา (คุณเพ็ญพิชชา ตินศรี) -->
+                <!-- *** จุดเปลี่ยนรูปภาพ: เปลี่ยนลิงก์ใน src="..." ด้านล่างเป็นรูปของคุณเพ็ญพิชชาได้ทันที *** -->
+                <div class="relative flex-shrink-0">
+                    <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-full p-1.5 bg-gradient-to-tr from-city-sky via-city-gold to-white shadow-xl">
+                        <img id="dev-avatar"
+                             src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=500&q=80" 
+                             onerror="this.src='https://placehold.co/400x400/6CABDD/1C2C5B?text=Penpitcha'"
+                             alt="คุณเพ็ญพิชชา ตินศรี - ผู้พัฒนาเว็บไซต์" 
+                             class="w-full h-full object-cover rounded-full border-4 border-city-navy">
+                    </div>
+                    <div class="absolute bottom-2 right-2 bg-city-sky text-city-navy text-xs font-extrabold px-3 py-1 rounded-full border border-white shadow">
+                        Developer
+                    </div>
+                </div>
+
+                <!-- รายละเอียดการติดต่อ -->
+                <div class="flex-1 text-center md:text-left">
+                    <div class="inline-block px-3 py-1 rounded-full bg-city-sky/25 border border-city-sky text-sky-200 text-xs font-semibold mb-3">
+                        ผู้พัฒนาและออกแบบระบบ (UX/UI & Web Development)
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-1">
+                        คุณเพ็ญพิชชา ตินศรี
+                    </h3>
+                    <p class="text-sm font-semibold text-city-gold mb-4">Penpitcha Tinsri</p>
+                    <p class="text-sky-100 text-sm sm:text-base mb-6 leading-relaxed">
+                        ผู้พัฒนาเว็บไซต์ทางการสโมสรฟุตบอล Manchester City ออกแบบด้วยมาตรฐาน HTML5, CSS3 และหลักการ UX/UI สมัยใหม่ เพื่อประสบการณ์การเข้าชมที่สวยงามและใช้งานง่ายบนทุกอุปกรณ์
+                    </p>
+
+                    <!-- กล่องแสดง Line ID พร้อมปุ่มคัดลอกและลิงก์แอดไลน์ -->
+                    <div class="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
+                        <div class="flex items-center gap-3 bg-white text-slate-900 px-5 py-3 rounded-2xl shadow-lg border-2 border-city-sky w-full sm:w-auto justify-between">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-brands fa-line text-3xl text-[#06C755]"></i>
+                                <div class="text-left">
+                                    <span class="block text-[11px] font-bold text-slate-400 uppercase">LINE ID</span>
+                                    <span id="line-id-text" class="text-base font-extrabold text-city-navy select-all">tonaor2014ty</span>
+                                </div>
+                            </div>
+                            <button onclick="copyLineId()" class="ml-3 px-3 py-1.5 rounded-lg bg-sky-50 hover:bg-city-navy hover:text-white text-city-navy text-xs font-bold transition-colors flex items-center gap-1" title="คัดลอก Line ID">
+                                <i class="fa-regular fa-copy"></i>
+                                <span id="copy-btn-label">คัดลอก</span>
+                            </button>
+                        </div>
+
+                        <a href="https://line.me/ti/p/~tonaor2014ty" target="_blank" rel="noopener noreferrer" 
+                           class="w-full sm:w-auto px-6 py-4 rounded-2xl bg-[#06C755] hover:bg-[#05b34c] text-white font-bold text-sm shadow-lg transition-transform hover:scale-105 flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-line text-xl"></i>
+                            <span>เพิ่มเพื่อนทาง LINE</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ส่วนท้ายเว็บไซต์ (FOOTER) -->
+    <footer class="bg-city-navy-deep text-sky-100 py-8 border-t border-city-sky/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-ship text-city-sky text-lg"></i>
+                <span class="font-semibold text-white">Manchester City F.C. Official Portal</span>
+                <span class="text-city-gold">| Sky Blue & Navy Theme</span>
+            </div>
+            <div class="text-center sm:text-right text-xs text-sky-200">
+                พัฒนาและออกแบบโดย <strong class="text-white">คุณเพ็ญพิชชา ตินศรี (Penpitcha Tinsri)</strong> (Line ID: tonaor2014ty)
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+         8. หน้าต่างอ่านรายละเอียดเพิ่มเติม (INTERACTIVE MODAL POPUP)
+         แสดงเนื้อหาเจาะลึกเมื่อผู้ใช้คลิกปุ่ม "คลิกอ่านเพิ่มเติม" หรือ "ดูข้อมูลสถิติส่วนตัว"
+         ========================================================================== -->
+    <div id="detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/75 backdrop-blur-sm" onclick="closeModalOnBackdrop(event)">
+        <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border-2 border-city-sky modal-animate">
+            <!-- หัว Modal -->
+            <div class="bg-gradient-to-r from-city-navy via-city-navy to-city-sky-dark px-6 py-5 flex justify-between items-center text-white">
+                <div class="flex items-center gap-2.5">
+                    <i id="modal-icon" class="fa-solid fa-book-open text-city-gold text-xl"></i>
+                    <h3 id="modal-title" class="text-lg sm:text-xl font-bold">รายละเอียดเพิ่มเติม</h3>
+                </div>
+                <button onclick="closeModal()" class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/30 flex items-center justify-center text-white transition-colors" aria-label="ปิดหน้าต่าง">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <!-- เนื้อหา Modal -->
+            <div class="p-6 sm:p-8 max-h-[70vh] overflow-y-auto">
+                <div id="modal-badge" class="inline-block px-3 py-1 rounded-full bg-sky-100 text-city-navy text-xs font-bold mb-3">
+                    ข้อมูลเชิงลึก
+                </div>
+                <div id="modal-body" class="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4">
+                    <!-- เนื้อหาจะถูกแทรกด้วย JavaScript -->
+                </div>
+            </div>
+
+            <!-- ท้าย Modal -->
+            <div class="bg-sky-50/70 px-6 py-4 border-t border-sky-100 flex justify-end">
+                <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl bg-city-navy hover:bg-city-sky-dark text-white font-bold text-sm transition-colors">
+                    ปิดหน้าต่าง
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- กล่องแจ้งเตือนขนาดเล็กเมื่อคัดลอก Line ID สำเร็จ (Toast Notification) -->
+    <div id="toast-notification" class="fixed bottom-6 right-6 z-50 hidden items-center gap-3 bg-city-navy text-white px-5 py-3.5 rounded-2xl shadow-2xl border-2 border-city-sky">
+        <i class="fa-solid fa-circle-check text-city-gold text-xl"></i>
+        <div>
+            <div class="text-sm font-bold">คัดลอก Line ID สำเร็จ!</div>
+            <div class="text-xs text-sky-200">Line ID: tonaor2014ty พร้อมวางแล้ว</div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         9. ส่วน JAVASCRIPT ควบคุมการทำงาน (MENU, FILTER, MODAL, COPY LINE ID)
+         ========================================================================== -->
+    <script>
+        // 1. ระบบเปิด-ปิดเมนูบนมือถือ (Mobile Navigation Toggle)
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 2. คลังข้อมูลบทความเชิงลึกสำหรับปุ่ม "คลิกอ่านเพิ่มเติม"
+        const articlesData = {
+            full_history: {
+                badge: 'ไทม์ไลน์ประวัติศาสตร์ฉบับเต็ม • ค.ศ. 1880 – ปัจจุบัน',
+                title: 'เส้นทางประวัติศาสตร์สโมสร แมนเชสเตอร์ ซิตี้',
+                content: `
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-xl bg-sky-50 border-l-4 border-city-sky">
+                            <h4 class="font-bold text-city-navy">ค.ศ. 1880 : จุดเริ่มต้น St. Mark's (West Gorton)</h4>
+                            <p class="text-sm mt-1">ก่อตั้งโดย แอนนา คอนเนลล์ และสมาชิกโบสถ์เซนต์มาร์ก เพื่อส่งเสริมกีฬาและสร้างความสามัคคีในชุมชนเวสต์กอร์ตัน เมืองแมนเชสเตอร์</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-sky-50 border-l-4 border-city-navy">
+                            <h4 class="font-bold text-city-navy">ค.ศ. 1887 – 1894 : จาก Ardwick A.F.C. สู่ Manchester City F.C.</h4>
+                            <p class="text-sm mt-1">สโมสรย้ายสนามไปที่ Hyde Road และเปลี่ยนชื่อเป็น Ardwick A.F.C. ในปี 1887 ก่อนจะปรับโครงสร้างใหม่และจดทะเบียนชื่อ "Manchester City F.C." อย่างเป็นทางการในวันที่ 16 เมษายน 1894</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-sky-50 border-l-4 border-city-gold">
+                            <h4 class="font-bold text-city-navy">ค.ศ. 1904 – 1976 : แชมป์เมเจอร์แรกและยุคทอง เมอร์เซอร์-อัลลิสัน</h4>
+                            <p class="text-sm mt-1">คว้าแชมป์ FA Cup ครั้งแรกในปี 1904, แชมป์ลีกสูงสุดครั้งแรกปี 1937 และเข้าสู่ยุคทองช่วงปลายทศวรรษ 1960s ที่คว้าแชมป์ครบทั้งลีกสูงสุด, FA Cup, League Cup และแชมป์ยุโรป Cup Winners' Cup</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-sky-50 border-l-4 border-city-sky-dark">
+                            <h4 class="font-bold text-city-navy">ค.ศ. 2008 – ปัจจุบัน : ยุคสมัยใหม่และ Treble แชมป์</h4>
+                            <p class="text-sm mt-1">การเข้ามาบริหารของ Abu Dhabi United Group และการคุมทีมของ เป๊ป กวาร์ดิโอลา ยกระดับสโมสรสู่จุดสูงสุด คว้า Treble แชมป์ปี 2023 และสร้างประวัติศาสตร์คว้าแชมป์พรีเมียร์ลีก 4 สมัยติดต่อกัน (2021–2024)</p>
+                        </div>
+                    </div>
+                `
+            },
+            history_1880: {
+                badge: 'จุดเริ่มต้นประวัติศาสตร์ • ค.ศ. 1880',
+                title: 'St. Mark\'s (West Gorton) จุดกำเนิดแห่งความหวัง',
+                content: `
+                    <p>ในช่วงปลายศตวรรษที่ 19 ย่านเวสต์กอร์ตัน (West Gorton) ทางตะวันออกของเมืองแมนเชสเตอร์ ประสบปัญหาเศรษฐกิจตกต่ำ การว่างงาน และความขัดแย้งระหว่างกลุ่มวัยรุ่น</p>
+                    <p><strong>แอนนา คอนเนลล์ (Anna Connell)</strong> บุตรสาวของบาทหลวงอาร์เธอร์ คอนเนลล์ แห่งโบสถ์เซนต์มาร์ก ร่วมกับผู้ดูแลโบสถ์ วิลเลียม บีสโตว์ และ โทมัส กูดบีเออร์ จึงได้ก่อตั้งทีมคริกเก็ตในปี 1875 และต่อยอดเป็นทีมฟุตบอลในเดือนพฤศจิกายน ปี 1880 ในชื่อ <strong>St. Mark's (West Gorton)</strong></p>
+                    <p>เป้าหมายสำคัญในยุคนั้นคือการสร้างความสามัคคีในชุมชน โดยเปิดรับสมาชิกทุกศาสนาและชนชั้น ซึ่งเป็นรากฐานทางวัฒนธรรมที่เปิดกว้างของสโมสรมาจนถึงปัจจุบัน</p>
+                `
+            },
+            history_1894: {
+                badge: 'การเปลี่ยนผ่านครั้งสำคัญ • ค.ศ. 1894',
+                title: 'จาก Ardwick สู่ชื่อ Manchester City F.C.',
+                content: `
+                    <p>ในปี 1887 สโมสรได้ย้ายสนามเหย้าไปยังถนนไฮด์ (Hyde Road) ในย่านอาร์ดวิก และเปลี่ยนชื่อเป็น <strong>Ardwick A.F.C.</strong> ก่อนจะเข้าร่วมฟุตบอลลีกดิวิชัน 2 ในปี 1892</p>
+                    <p>ต่อมาในปี 1894 โจชัว พาร์บี (Joshua Parby) ผู้จัดการทีมในขณะนั้น ได้เสนอให้ปรับโครงสร้างสโมสรใหม่เพื่อเป็นตัวแทนของคนทั้งเมืองแมนเชสเตอร์ จึงได้จดทะเบียนชื่อใหม่ว่า <strong>"แมนเชสเตอร์ ซิตี้ ฟุตบอล คลับ" (Manchester City Football Club)</strong> อย่างเป็นทางการเมื่อวันที่ 16 เมษายน 1894 และเริ่มใช้สีฟ้า-ขาวเป็นสีประจำสโมสร</p>
+                `
+            },
+            history_1968: {
+                badge: 'ยุคทองแห่งความสำเร็จ • 1965–1976',
+                title: 'ยุคสมัยของ โจ เมอร์เซอร์ และ มัลคอล์ม อัลลิสัน',
+                content: `
+                    <p>ในปี 1965 สโมสรแต่งตั้ง <strong>โจ เมอร์เซอร์</strong> เป็นผู้จัดการทีม โดยมี <strong>มัลคอล์ม อัลลิสัน</strong> เป็นผู้ช่วย ทั้งคู่ได้พลิกโฉมสไตล์การเล่นของทีมให้ดุดันและเร้าใจ</p>
+                    <p>ทีมชุดนั้นนำโดยยอดนักเตะอย่าง โคลิน เบลล์, ฟรานซิส ลี, ไมค์ ซัมเมอร์บี และ นีล ยัง สามารถคว้าแชมป์ดิวิชัน 1 ในฤดูกาล 1967–68 ตามด้วย เอฟเอ คัพ 1969, ลีก คัพ 1970 และแชมป์ยุโรปใบแรกของสโมสรคือ <strong>European Cup Winners' Cup 1970</strong></p>
+                `
+            },
+            history_modern: {
+                badge: 'ยุคปัจจุบัน • 2008–ปัจจุบัน',
+                title: 'การปฏิวัติวงการฟุตบอลยุค เป๊ป กวาร์ดิโอลา',
+                content: `
+                    <p>หลังจากกลุ่มทุน Abu Dhabi United Group เข้ามาบริหารในปี 2008 สโมสรได้ลงทุนพัฒนาโครงสร้างพื้นฐานระดับโลก ทั้งสนาม Etihad Stadium และศูนย์ฝึก City Football Academy</p>
+                    <p>จุดเปลี่ยนสำคัญเกิดขึ้นเมื่อ <strong>เป๊ป กวาร์ดิโอลา</strong> เข้ามาคุมทีมในปี 2016 เขาพาทีมสร้างสถิติมากมาย เช่น การทำ 100 คะแนนในพรีเมียร์ลีกฤดูกาล 2017–18, การคว้าแชมป์ในประเทศครบทุกรายการ (Domestic Treble) ในปี 2019 และการคว้า <strong>4 แชมป์พรีเมียร์ลีกติดต่อกัน</strong> (2021–2024) ซึ่งเป็นทีมแรกในประวัติศาสตร์อังกฤษที่ทำได้</p>
+                `
+            },
+            treble: {
+                badge: 'ประวัติศาสตร์หน้าสำคัญ • ฤดูกาล 2022/23',
+                title: 'เส้นทางสู่ "เทรเบิลแชมป์" (The Continental Treble)',
+                content: `
+                    <p>ฤดูกาล 2022–23 ถือเป็นฤดูกาลที่ยิ่งใหญ่ที่สุดในประวัติศาสตร์สโมสร แมนเชสเตอร์ ซิตี้ เมื่อทีมสามารถคว้า 3 แชมป์หลักได้ภายในฤดูกาลเดียว:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>1. พรีเมียร์ลีก อังกฤษ:</strong> แซงคว้าแชมป์ในช่วงโค้งสุดท้ายได้อย่างยอดเยี่ยม</li>
+                        <li><strong>2. เอฟเอ คัพ:</strong> เอาชนะคู่ปรับร่วมเมืองอย่าง แมนเชสเตอร์ ยูไนเต็ด 2-1 ที่สนามเวมบลีย์ จากสองประตูของ อิลคาย กุนโดกัน</li>
+                        <li><strong>3. ยูฟ่า แชมเปียนส์ลีก:</strong> เอาชนะ อินเตอร์ มิลาน 1-0 ที่กรุงอิสตันบูล จากลูกยิงสุดสวยของ <strong>โรดรี</strong> คว้าถ้วยบิ๊กเอียร์สมัยแรกในประวัติศาสตร์สโมสร</li>
+                    </ul>
+                `
+            },
+            honour_league: {
+                badge: 'ทำเนียบแชมป์ลีกสูงสุด • 10 สมัย',
+                title: 'สถิติและเรื่องราวแชมป์ลีกสูงสุดอังกฤษ',
+                content: `
+                    <p>แมนเชสเตอร์ ซิตี้ คว้าแชมป์ลีกสูงสุดของอังกฤษรวม 10 สมัย แบ่งเป็นยุคดิวิชัน 1 เดิม 2 สมัย (1936–37, 1967–68) และยุคพรีเมียร์ลีก 8 สมัย</p>
+                    <p><strong>ไฮไลต์สำคัญ:</strong></p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>ฤดูกาล 2011–12:</strong> ประตูช่วงทดเวลาบาดเจ็บนาทีที่ 93:20 ของ เซร์คิโอ อเกวโร พาทีมคว้าแชมป์พรีเมียร์ลีกสมัยแรกในรอบ 44 ปี</li>
+                        <li><strong>ฤดูกาล 2017–18:</strong> ทีม "Centurions" ที่ทำสถิติเก็บได้ 100 คะแนนเต็มเป็นทีมแรกในประวัติศาสตร์พรีเมียร์ลีก</li>
+                        <li><strong>ฤดูกาล 2020–21 ถึง 2023–24:</strong> สร้างสถิติเป็นสโมสรแรกในประวัติศาสตร์ฟุตบอลอังกฤษที่คว้าแชมป์ลีกสูงสุดได้ 4 สมัยติดต่อกัน</li>
+                    </ul>
+                `
+            },
+            honour_fa: {
+                badge: 'ฟุตบอลถ้วยที่เก่าแก่ที่สุดในโลก • 7 สมัย',
+                title: 'เกียรติประวัติในศึก เอฟเอ คัพ (FA Cup)',
+                content: `
+                    <p>เอฟเอ คัพ คือถ้วยรางวัลระดับเมเจอร์ใบแรกในประวัติศาสตร์ของแมนเชสเตอร์ ซิตี้ โดยคว้าแชมป์ครั้งแรกในปี <strong>1904</strong> ด้วยการเอาชนะโบลตัน วันเดอเรอร์ส 1-0 จากประตูของ บิลลี เมเรดิธ</p>
+                    <p>อีกหนึ่งเหตุการณ์ในตำนานคือ <strong>นัดชิงชนะเลิศปี 1956</strong> ที่ผู้รักษาประตู แบร์ต เทราต์มันน์ (Bert Trautmann) ฝืนลงเล่นจนจบเกมทั้งที่กระดูกคอหัก ช่วยให้ทีมชนะเบอร์มิงแฮม ซิตี้ 3-1</p>
+                `
+            },
+            honour_carabao: {
+                badge: 'แชมป์ลีกคัพ • 8 สมัย',
+                title: 'ความยิ่งใหญ่ในศึก Carabao Cup / EFL Cup',
+                content: `
+                    <p>แมนเชสเตอร์ ซิตี้ เป็นหนึ่งในสโมสรที่ประสบความสำเร็จมากที่สุดในรายการฟุตบอลลีกคัพของอังกฤษ โดยคว้าแชมป์ไปถึง 8 สมัย</p>
+                    <p>โดยเฉพาะอย่างยิ่งในช่วงปี <strong>2018, 2019, 2020 และ 2021</strong> ทีมสามารถคว้าแชมป์ได้ถึง <strong>4 สมัยติดต่อกัน</strong> เทียบเท่าสถิติสูงสุดตลอดกาลของรายการ</p>
+                `
+            },
+            honour_cwc: {
+                badge: 'แชมป์สโมสรโลก & ยูฟ่า ซูเปอร์คัพ • ปี 2023',
+                title: 'ก้าวสู่จุดสูงสุดของฟุตบอลสโมสรโลก',
+                content: `
+                    <p>หลังจากคว้าแชมป์ UEFA Champions League 2023 แมนเชสเตอร์ ซิตี้ เดินหน้าคว้าแชมป์ระดับนานาชาติเพิ่มอีก 2 รายการในปีเดียวกัน:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>UEFA Super Cup 2023:</strong> เอาชนะจุดโทษ เซบียา ที่ประเทศกรีซ</li>
+                        <li><strong>FIFA Club World Cup 2023:</strong> เอาชนะ ฟลูมิเนนเซ 4-0 ที่ประเทศซาอุดีอาระเบีย ผงาดคว้าแชมป์สโมสรโลกสมัยแรกและติดตราแชมป์โลกสีทองบนหน้าอกเสื้อ</li>
+                    </ul>
+                `
+            }
+        };
+
+        // 3. ฟังก์ชันเปิด Modal บทความ
+        function openArticleModal(articleKey) {
+            const data = articlesData[articleKey];
+            if (!data) return;
+
+            document.getElementById('modal-icon').className = 'fa-solid fa-book-open text-city-gold text-xl';
+            document.getElementById('modal-badge').textContent = data.badge;
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-body').innerHTML = data.content;
+
+            const modal = document.getElementById('detail-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // 4. ฟังก์ชันเปิด Modal ข้อมูลนักเตะ
+        function openPlayerModal(name, number, position, nationality, bio) {
+            document.getElementById('modal-icon').className = 'fa-solid fa-shirt text-city-gold text-xl';
+            document.getElementById('modal-badge').textContent = `หมายเลขเสื้อ #${number} • ${position}`;
+            document.getElementById('modal-title').textContent = name;
+            document.getElementById('modal-body').innerHTML = `
+                <div class="grid grid-cols-2 gap-4 bg-sky-50 p-4 rounded-2xl border border-sky-100 mb-4">
+                    <div>
+                        <span class="text-xs text-slate-400 block">ตำแหน่งการเล่น</span>
+                        <span class="font-bold text-city-navy">${position}</span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 block">สัญชาติ</span>
+                        <span class="font-bold text-city-sky-dark">${nationality}</span>
+                    </div>
+                </div>
+                <h4 class="font-bold text-city-navy mb-2">ข้อมูลและบทบาทในทีม:</h4>
+                <p class="text-slate-700 leading-relaxed">${bio}</p>
+            `;
+
+            const modal = document.getElementById('detail-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // 5. ฟังก์ชันปิด Modal
+        function closeModal() {
+            const modal = document.getElementById('detail-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function closeModalOnBackdrop(event) {
+            if (event.target.id === 'detail-modal') {
+                closeModal();
+            }
+        }
+
+        // ปิด Modal ด้วยปุ่ม Escape บนคีย์บอร์ด
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // 6. ระบบกรองรายชื่อนักเตะตามตำแหน่ง (Squad Filter)
+        function filterPlayers(position) {
+            const cards = document.querySelectorAll('.player-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // อัปเดตสีปุ่มที่ถูกเลือก
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-city-navy', 'text-white', 'shadow-md');
+                btn.classList.add('bg-sky-50', 'text-city-navy');
+            });
+            event.currentTarget.classList.remove('bg-sky-50', 'text-city-navy');
+            event.currentTarget.classList.add('bg-city-navy', 'text-white', 'shadow-md');
+
+            // แสดง/ซ่อนการ์ดนักเตะ
+            cards.forEach(card => {
+                if (position === 'all' || card.getAttribute('data-position') === position) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // 7. ระบบคัดลอก Line ID ของผู้พัฒนา (คุณเพ็ญพิชชา ตินศรี)
+        function copyLineId() {
+            const lineId = 'tonaor2014ty';
+            const tempInput = document.createElement('input');
+            tempInput.value = lineId;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            // เปลี่ยนข้อความปุ่มชั่วคราวและแสดง Toast แจ้งเตือน
+            const copyLabel = document.getElementById('copy-btn-label');
+            const toast = document.getElementById('toast-notification');
+            
+            copyLabel.textContent = 'คัดลอกแล้ว!';
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
+
+            setTimeout(() => {
+                copyLabel.textContent = 'คัดลอก';
+                toast.classList.add('hidden');
+                toast.classList.remove('flex');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
